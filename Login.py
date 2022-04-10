@@ -5,17 +5,26 @@ def validateUser (nama_folder,userInfo):
     directory = os.path.abspath(os.getcwd())
     path = os.path.join(directory, nama_folder, "user.csv")
     print(path)
-    # disini buat yang ngambil data dari file yang buat nge cek
-    return 
+    # disini buat yang ngambil data dari file yang buat nge cek ke user.csv
+    if userInfo in path :
+        validate= True
+    else:
+        validate= False
+    return validate
 
 
 def loginSequence (nama_folder):
-    User = str(input('Masukan username: '))
+    user = str(input('Masukan username: '))
     password = str(input('Masukan Password: '))
 
-    userInfo = [User,password]
-    
-    validateUser(nama_folder,userInfo)
+    while user == '' or password == '':
+        print ('Silahkan masukkan username dan password terlebih dahulu')
+        user = str(input('Masukan username: '))
+        password = str(input('Masukan Password: '))
 
-    return valid
+    userInfo = [user,password]
+    
+    acces=validateUser(nama_folder,userInfo) #ngecek user ada atau tidak
+
+    return acces
 
