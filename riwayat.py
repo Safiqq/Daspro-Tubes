@@ -1,40 +1,35 @@
 import os
 from function import *
 
-def riwayat(nama_folder, user_id):
+def riwayat(nama_folder, user_data):
+    user_id = user_data[0]
     # path = os.getcwd() + "/" + nama_folder + "/" + "riwayat.csv"
     # path = os.path.join(os.getcwd(), nama_folder, "riwayat.csv")
-    directory = os.path.abspath(os.getcwd())
-    path = os.path.join(directory, nama_folder, "riwayat.csv")
-    print(path)
+    path = os.path.join(os.getcwd(), nama_folder, "riwayat.csv")
     with open(path, "r") as f:
-        space_max = 0
+        # space_max_1 untuk nama
+        # space_max_2 untuk harga
+        space_max_1 = 0
+        space_max_2 = 0
         lines = f.read()
-        lines = split(lines, "\n")[1:]
-        new_lines = []
-        for i in range(length(lines)):
-            line = split(lines[i], ",")
+        list_line = split(lines, "\n")[1:]
+        list_game = []
+        for i in range(length(list_line)):
+            line = split(list_line[i], ";")
             if length(line[0]) > 0:
                 if int(line[3]) == int(user_id):
-                    for j in range(length(line)):
-                        if j == 1 and space_max < length(line[j]):
-                            space_max = length(line[j])
-                    new_lines = append(new_lines, line)
-        if length(new_lines) > 0:
-            for i in range(length(new_lines)):
+                    if space_max_1 < length(line[1]):
+                        space_max_1 = length(line[1])
+                    if space_max_2 < length(line[2]):
+                        space_max_2 = length(line[2])
+                    list_game = append(list_game, line)
+        if length(list_game) > 0:
+            for i in range(length(list_game)):
                 string = ""
-                for j in range(length(new_lines[i])):
-                    if j != 3:
-                        if j == 0:
-                            string += str(i + 1) + ". " + new_lines[i][j] + " |"
-                        elif j == 1:
-                            space_count = space_max - length(new_lines[i][j])
-                            string += " " + new_lines[i][j] + (" " * space_count) + " |"
-                        else:
-                            string += " " + new_lines[i][j] + " |"
+                count_space_1 = space_max_1 - length(list_game[i][1])
+                count_space_2 = space_max_2 - length(list_game[i][2])
+                string += str(i + 1) + ". " + list_game[i][0] + " | " + list_game[i][1] + (" " * count_space_1)
+                string += " | " + list_game[i][2] + (" " * count_space_2) + " | " + list_game[i][4] + " |"
                 print(string)
         else:
             print("Maaf, kamu tidak ada riwayat pembelian game. Ketik perintah beli_game untuk membeli.")
-            
-
-riwayat("tes", 1)

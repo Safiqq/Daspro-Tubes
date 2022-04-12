@@ -26,6 +26,3 @@ def tambah_game(list_game):
         new_game = [game_id, nama_game, kategori, tahun_rilis, harga, stok_awal]
         list_game = append(list_game, new_game)
         return list_game
-
-a = tambah_game([])
-print(a)

@@ -28,7 +28,7 @@ def register(list_user):
             checker_2 = True
 
     if checker_1 and not checker_2:
-        user_id = length(list_user) + 1
+        user_id = str(length(list_user) + 1)
         password = cipher(password, "encrypt")
         new_user = [user_id, username, nama, password, "user", "0"]
         list_user = append(list_user, new_user)
