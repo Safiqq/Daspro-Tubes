@@ -1,4 +1,4 @@
-from function import *
+from functions import *
 
 def tictactoe():
     turn = 0

@@ -1,4 +1,4 @@
-from function import *
+from functions import *
 from cipher import *
 
 def login(list_user):
@@ -11,9 +11,10 @@ def login(list_user):
         # list_user[i][3] = password
         if list_user[i][1] == username:
             if cipher(list_user[i][3], "decrypt") == password:
-                print("Halo", list_user[i][2] + '! Selamat datang di "Binomo".')
                 checker = True
-                return list_user[i]
-    if not checker:
+    if checker:
+        print("Halo", list_user[i][2] + '! Selamat datang di "Binomo".')
+        return list_user[i]
+    else:
         print("Password atau username salah atau tidak ditemukan.")
         return

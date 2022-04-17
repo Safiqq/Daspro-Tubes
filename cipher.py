@@ -1,4 +1,4 @@
-from function import *
+from functions import *
 
 def inv(a, m):
     y = 1

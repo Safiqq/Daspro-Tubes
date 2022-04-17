@@ -1,14 +1,14 @@
 import time
 
 def lcg(x):
-    a = time.perf_counter_ns()
-    time.sleep(0.2)
-    c = time.perf_counter_ns()
-    time.sleep(0.2)
-    m = time.perf_counter_ns()
+    x *= time.perf_counter_ns()
+    a = 11
+    c = 7
+    m = 10
     x = (a * x + c) % m
-    r = (x * 10) // m
-    return r
+
+    print(x)
+lcg(1)
 
 def kerangajaib():
     input("Apa pertanyaanmu? ")
