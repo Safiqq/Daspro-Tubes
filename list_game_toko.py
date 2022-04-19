@@ -1,4 +1,3 @@
-from tkinter import E
 from functions import *
 
 def sort_by_index(list_game, index, order):

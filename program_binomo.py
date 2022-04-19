@@ -58,11 +58,8 @@ while(True):
 
     # Akses user
     elif perintah == "buy_game":
-        print(list_game_dipunya, list_game_di_toko, list_riwayat, user_aktif)
         result = buy_game(list_game_dipunya, list_game_di_toko, list_riwayat, user_aktif)
-        print(result)
         list_game_dipunya, list_game_di_toko, list_riwayat, user_aktif = result
-        print(list_game_dipunya, list_game_di_toko, list_riwayat, user_aktif)
         if user_aktif != []:
             for i in range(length(list_user)):
                 # list_user[i][0] = id user

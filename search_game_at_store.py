@@ -35,16 +35,9 @@ def search_game_at_store(list_game_toko, user_data):
 
         # Tampilkan ke layar sesuai format
         if length(list_game) > 0:
-            # space_max_1 untuk nama game
-            # space_max_2 untuk kategori
-            space_max_1 = 0
-            space_max_2 = 0
-            for i in range(length(list_game)):
-                if space_max_1 < length(list_game[i][1]):
-                    space_max_1 = length(list_game[i][1])
-            for i in range(length(list_game)):
-                if space_max_2 < length(list_game[i][2]):
-                    space_max_2 = length(list_game[i][2])
+            # 1 untuk nama, 2 untuk kategori
+            space_max_1 = space_max(list_game, 1)
+            space_max_2 = space_max(list_game, 2)
             for i in range(length(list_game)):
                 string = ""
                 space_count_1 = space_max_1 - length(list_game[i][1])
