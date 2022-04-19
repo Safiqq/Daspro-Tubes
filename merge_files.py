@@ -11,5 +11,9 @@ from search_game_at_store import *
 from topup import *
 from riwayat import *
 from help import *
+from load import *
 from save import *
 from exit import *
+from info import *
+from kerangajaib import *
+from tictactoe import *

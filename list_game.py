@@ -1,4 +1,3 @@
-from tkinter import E
 from functions import *
 
 def list_game(list_game_dipunya, list_game_toko, user_data):
@@ -6,46 +5,29 @@ def list_game(list_game_dipunya, list_game_toko, user_data):
     if user_data != []:
         is_admin = validasi_akses(user_data)
         if not is_admin:
-            new_list_game = []
             list_game_dipunya_user = []
-            # Cari id game yang dipunya user
-            for i in range(length(list_game_dipunya)):
-                # list_game_dipunya[i][1] = user id
-                if list_game_dipunya[i][1] == user_data[0]:
-                    list_game_dipunya_user = append(list_game_dipunya_user, list_game_dipunya[i])
-            # Cari info lengkap game yang dipunya user (dari id)
-            for i in range(length(list_game_dipunya_user)):
-                for j in range(length(list_game_toko)):
-                    if list_game_dipunya_user[i][0] == list_game_toko[j][0]:
-                        new_list_game = append(new_list_game, list_game_toko[j])
+            list_id_game_dipunya = get_id_game_owned(list_game_dipunya, user_data)
+            for i in range(length(list_id_game_dipunya)):
+                index = get_game_index(list_game_toko, list_id_game_dipunya[i])
+                list_game_dipunya_user = append(list_game_dipunya_user, list_game_toko[index])
+
             # Tampilkan ke layar sesuai format
-            if length(new_list_game) > 0:
-                # space_max_1 untuk nama game
-                # space_max_2 untuk kategori
-                space_max_1 = 0
-                space_max_2 = 0
-                for i in range(length(new_list_game)):
-                    if space_max_1 < length(new_list_game[i][1]):
-                        space_max_1 = length(new_list_game[i][1])
-                for i in range(length(new_list_game)):
-                    if space_max_2 < length(new_list_game[i][2]):
-                        space_max_2 = length(new_list_game[i][2])
-                for i in range(length(new_list_game)):
+            if length(list_game_dipunya_user) > 0:
+                print("Daftar game:")
+                # 1 untuk nama, 2 untuk kategori
+                space_max_1 = space_max(list_game_dipunya_user, 1)
+                space_max_2 = space_max(list_game_dipunya_user, 2)
+                for i in range(length(list_game_dipunya_user)):
                     string = ""
-                    space_count_1 = space_max_1 - length(new_list_game[i][1])
-                    space_count_2 = space_max_2 - length(new_list_game[i][2])
-                    string += str(i + 1) + ". " + new_list_game[i][0] + " | " + new_list_game[i][1] + (" " * space_count_1) + " | "
-                    string += new_list_game[i][2] + (" " * space_count_2) + " | " + new_list_game[i][3] + " | " + new_list_game[i][4]
+                    space_count_1 = space_max_1 - length(list_game_dipunya_user[i][1])
+                    space_count_2 = space_max_2 - length(list_game_dipunya_user[i][2])
+                    string += str(i + 1) + ". " + list_game_dipunya_user[i][0] + " | " + list_game_dipunya_user[i][1] + (" " * space_count_1) + " | "
+                    string += list_game_dipunya_user[i][2] + (" " * space_count_2) + " | " + list_game_dipunya_user[i][3] + " | " + list_game_dipunya_user[i][4]
                     print(string)
             else:
                 print("Maaf, kamu belum membeli game. Ketik perintah beli_game untuk beli.")
         else:
-            print("Perintah gagal dilaksanakan, Anda bukan user.")
+            print("Maaf, anda harus menjadi user untuk melakukan hal tersebut.")
     # Belum login
     else:
-        print("Silakan lakukan login terlebih dahulu.")
-
-# a = [["GAME001", "1"], ["GAME002", "1"], ["GAME001", "2"]]
-# b = [['GAME001', 'BNMO - Play Along With Crypto', 'Adventure', '2022', '100.000', '1'], ['GAME002', 'Hehehe', 'Comedy', '2021', '100.000', '1'], ['GAME069', 'Python Gemink', 'Programming', '2001', '100.000', '1']]
-# c = ["1", "admin", "Safiq", "jkndw", "admin", "999999"]
-# list_game(a, b, c)
+        print('Maaf, anda harus login terlebih dahulu untuk mengirim perintah selain "login".')

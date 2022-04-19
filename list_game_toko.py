@@ -1,71 +1,73 @@
+from tkinter import E
 from functions import *
 
-# Kalo input kosong jadi sort berdasarkan id dari paling kecil (di atas) sampai paling beasr (di bawah)
+def sort_by_index(list_game, index, order):
+    new_list_game = []
+    for i in range(length(list_game)):
+        element = list_game[i][index]
+        if index == 0:
+            element = slicing(element, 4, 999)
+        elif index == 4:
+            element = convert(element, int)
+        new_list_game = append(new_list_game, element)
+    new_list_game = sort(new_list_game, order)
+    return new_list_game
+
+# Kalo input kosong jadi sort berdasarkan id dari paling kecil (di atas) sampai paling besar (di bawah)
 def list_game_toko(list_game, user_data):
     # Sudah login
     if user_data != []:
         skema = input("Skema sorting: ")
-        to_be_sorted = ["" for i in range(length(list_game))]
-        sort_by = 0
+        print()
 
-        # Descending = -
-        # Ascending = +
-        tipe = skema[5]
-        if tipe == "-":
-            tipe = "d"
-        elif tipe == "+":
-            tipe = "a"
-        checker = True
+        if length(list_game) > 0:
+            checker = True
+            index = 0
+            order = "+"
 
-        # list_game[i][3] = tahun
-        # list_game[i][4] = harga
-        if slicing(skema, 0, 5) == "tahun":
-            sort_by = 3
-        elif slicing(skema, 0, 5) == "harga":
-            sort_by = 4
-        else:
-            checker = False
-            print("Skema sorting tidak valid!")
+            print(skema)
+            if skema:
+                # list_game[i][3] = tahun
+                # list_game[i][4] = harga
+                if skema == "tahun-" or skema == "tahun+":
+                    index = 3
+                elif skema == "harga-" or skema == "harga+":
+                    index = 4
+                else:
+                    checker = False
+            if checker:
+                if length(skema) == 6:
+                    order = skema[5]
+                to_be_sorted = sort_by_index(list_game, index, order)
+                sorted_list = []
 
-        if checker:
-            for i in range(length(list_game)):
-                to_be_sorted[i] = list_game[i][sort_by]
-            to_be_sorted = sort(to_be_sorted, tipe)
-
-            if length(list_game) > 0:
-                # space_max_1 untuk nama game
-                # space_max_2 untuk kategori
-                # space_max_3 untuk harga
-                space_max_1 = 0
-                space_max_2 = 0
-                space_max_3 = 0
-                new_list_game = []
-                count = length(list_game)
-
-                for i in range(length(list_game)):
-                    if space_max_1 < length(list_game[i][1]):
-                        space_max_1 = length(list_game[i][1])
-                for i in range(length(list_game)):
-                    if space_max_2 < length(list_game[i][2]):
-                        space_max_2 = length(list_game[i][2])
-                for i in range(length(list_game)):
-                    if space_max_3 < length(list_game[i][4]):
-                        space_max_3 = length(list_game[i][4])
+                if index == 4:
+                    for i in range(length(to_be_sorted)):
+                        to_be_sorted[i] = convert(to_be_sorted[i], str)
 
                 for i in range(length(to_be_sorted)):
                     for j in range(length(list_game)):
-                        if to_be_sorted[i] == list_game[j][sort_by]:
-                            new_list_game = append(new_list_game, list_game[j])
+                        if to_be_sorted[i] == list_game[j][index]:
+                            sorted_list = append(sorted_list, list_game[j])
+                
+                # 1 untuk nama, 2 untuk kategori, 4 untuk harga
+                space_max_1 = space_max(sorted_list, 1)
+                space_max_2 = space_max(sorted_list, 2)
+                space_max_3 = space_max(sorted_list, 4)
 
-                for i in range(length(new_list_game)):
+                for i in range(length(sorted_list)):
                     string = ""
-                    space_count_1 = space_max_1 - length(new_list_game[i][1])
-                    space_count_2 = space_max_2 - length(new_list_game[i][2])
-                    space_count_3 = space_max_2 - length(new_list_game[i][4])
-                    string += str(i + 1) + ". " + new_list_game[i][0] + " | " + new_list_game[i][1] + (" " * space_count_1) + " | "
-                    string += new_list_game[i][4] + (" " * space_count_3) + " | " + new_list_game[i][2] + (" " * space_count_2) + " | "
-                    string += new_list_game[i][3] + " | " + new_list_game[i][5]
+                    space_count_1 = space_max_1 - length(sorted_list[i][1])
+                    space_count_2 = space_max_2 - length(sorted_list[i][2])
+                    space_count_3 = space_max_3 - length(sorted_list[i][4])
+                    string += str(i + 1) + ". " + sorted_list[i][0] + " | " + sorted_list[i][1] + (" " * space_count_1) + " | "
+                    string += sorted_list[i][4] + (" " * space_count_3) + " | " + sorted_list[i][2] + (" " * space_count_2) + " | "
+                    string += sorted_list[i][3] + " | " + sorted_list[i][5]
                     print(string)
+            else:
+                print("Skema sorting tidak valid!")
+        else:
+            print("Tidak ada game pada toko.")
     # Belum login
     else:
-        print("Silakan lakukan login terlebih dahulu.")
+        print('Maaf, anda harus login terlebih dahulu untuk mengirim perintah selain "login".')

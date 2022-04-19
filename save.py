@@ -1,6 +1,22 @@
 import os
 from functions import *
 
+def save_file(directory, nama_file, array):
+    path = os.path.join(directory, nama_file)
+    title = ""
+    if nama_file == "game.csv":
+        title = "id;nama;kategori;tahun_rilis;harga;stok"
+    elif nama_file == "kepemilikan.csv":
+        title = "game_id;user_id"
+    elif nama_file == "riwayat.csv":
+        title = "game_id;nama;harga;user_id;tahun_beli"
+    elif nama_file == "user.csv":
+        title = "id;username;nama;password;role;saldo"
+    for i in range(length(array)):
+        array[i] = "\n" + join(array[i], ";")
+    array = konkat([title], array)
+    open(path, "w").writelines(array)
+
 def save(list_user, list_game_di_toko, list_game_dipunya, list_riwayat, user_data):
     # Sudah login
     if user_data != []:
@@ -10,42 +26,13 @@ def save(list_user, list_game_di_toko, list_game_dipunya, list_riwayat, user_dat
         print("\nSaving...")
         if not os.path.exists(directory):
             os.mkdir(directory)
-        game_csv = os.path.join(directory, "game.csv")
-        kepemilikan_csv = os.path.join(directory, "kepemilikan.csv")
-        riwayat_csv = os.path.join(directory, "riwayat.csv")
-        user_csv = os.path.join(directory, "user.csv")
 
-        # Save game.csv
-        lines_game_di_toko = ["" for i in range(length(list_game_di_toko) + 1)]
-        lines_game_di_toko[0] = "id;nama;kategori;tahun_rilis;harga;stok"
-        for i in range(length(list_game_di_toko)):
-            lines_game_di_toko[i+1] = "\n" + join(list_game_di_toko[i], ";")
-        open(game_csv, "w").writelines(lines_game_di_toko)
-        
-        # Save kepemilikan.csv
-        lines_game_dipunya = ["" for i in range(length(list_game_dipunya) + 1)]
-        lines_game_dipunya[0] = "game_id;user_id"
-        for i in range(length(list_game_dipunya)):
-            lines_game_dipunya[i+1] = "\n" + join(list_game_dipunya[i], ";")
-        open(kepemilikan_csv, "w").writelines(lines_game_dipunya)
+        save_file(directory, "user.csv", list_user)
+        save_file(directory, "game.csv", list_game_di_toko)
+        save_file(directory, "kepemilikan.csv", list_game_dipunya)
+        save_file(directory, "riwayat.csv", list_riwayat)
 
-        # Save riwayat.csv
-        lines_riwayat = ["" for i in range(length(list_riwayat) + 1)]
-        lines_riwayat[0] = "game_id;nama;harga;user_id;tahun_beli"
-        for i in range(length(list_riwayat)):
-            lines_riwayat[i+1] = "\n" + join(list_riwayat[i], ";")
-        open(riwayat_csv, "w").writelines(lines_riwayat)
-
-        # Save user.csv
-        lines_user = ["" for i in range(length(list_user) + 1)]
-        lines_user[0] = "id;username;nama;password;role;saldo"
-        for i in range(length(list_user)):
-            lines_user[i+1] = "\n" + join(list_user[i], ";")
-        open(user_csv, "w").writelines(lines_user)
-        
         print("Data telah disimpan pada folder", nama_folder)
     # Belum login
     else:
-        print("Silakan lakukan login terlebih dahulu.")
-
-# save([], [['GAME001', 'BNMO - Play Along With Crypto', 'Adventure', '2022', '100.000', '1'], ['GAME002', 'Hehehe', 'Comedy', '2021', '100.000', '1'], ['GAME069', 'Python Gemink', 'Programming', '2001', '100.000', '1']], [], [])
+        print('Maaf, anda harus login terlebih dahulu untuk mengirim perintah selain "login".')

@@ -49,3 +49,18 @@ def cipher(password, todo):
             else:
                 decrypted += chr(i)
         return decrypted
+
+def cipher_input(user_data):
+    if user_data != []:
+        password = input("Masukkan password yang ingin dicipher: ")
+        todo = input("Masukkan metode yang ingin dilakukan (E/d): ")
+        print()
+
+        if todo.lower() == "e":
+            print("Hasil encrypt:", cipher(password, "encrypt"))
+        elif todo.lower() == "d":
+            print("Hasil decrypt:", cipher(password, "decrypt"))
+        else:
+            print("Metode yang dimasukkan salah, harus E/d.")
+    else:
+        print('Maaf, anda harus login terlebih dahulu untuk mengirim perintah selain "login".')

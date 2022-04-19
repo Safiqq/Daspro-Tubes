@@ -1,6 +1,6 @@
 from functions import *
 
-def ubah_game(list_game, user_data):
+def ubah_game(list_game_toko, user_data):
     # Sudah login
     if user_data != []:
         is_admin = validasi_akses(user_data)
@@ -10,22 +10,50 @@ def ubah_game(list_game, user_data):
             kategori = input("Masukkan kategori: ")
             tahun_rilis = input("Masukkan tahun rilis: ")
             harga = input("Masukkan harga: ")
+            print()
 
-            for i in range(length(list_game)):
-                # Belum ada validasi ID game
-                if list_game[i][0] == id_game[0]:
-                    if nama_game != "":
-                        list_game[i][1] = nama_game
-                    if kategori != "":
-                        list_game[i][2] = kategori
-                    if tahun_rilis != "":
-                        list_game[i][3] = tahun_rilis
-                    if harga != "":
-                        list_game[i][4] = harga
-            print("Data game dengan ID", id_game, "berhasil diubah")
+            array = []
+            string = ""
+
+            is_valid = validasi_game_toko(list_game_toko, id_game)
+            if is_valid:
+                for i in range(length(list_game_toko)):
+                    if list_game_toko[i][0] == id_game:
+                        if nama_game != "":
+                            list_game_toko[i][1] = nama_game
+                            array = append(array, "nama game")
+                        if kategori != "":
+                            list_game_toko[i][2] = kategori
+                            array = append(array, "kategori")
+                        if tahun_rilis != "":
+                            list_game_toko[i][3] = tahun_rilis
+                            array = append(array, "tahun rilis")
+                        if harga != "":
+                            list_game_toko[i][4] = harga
+                            array = append(array, "harga")
+
+                # Merapikan keluaran output
+                for i in range(length(array)):
+                    if array:
+                        if i == 0:
+                            string += array[i]
+                        else:
+                            if length(array) > 2:
+                                string += ","
+                            string += " "
+                            if i == (length(array) - 1):
+                                string += "dan "
+                            string += array[i]
+
+                if string:
+                    print("Berhasil mengubah", string, "untuk game dengan ID", id_game + ".")
+                else:
+                    print("Tidak ada informasi yang diubah.")
+            else:
+                print("Tidak ada game dengan ID tersebut.")
         else:
-            print("Perintah gagal dilaksanakan, Anda bukan admin.")
+            print("Maaf, anda tidak memiliki izin untuk menjalankan perintah berikut. Mintalah ke administrator untuk melakukan hal tersebut.")
     # Belum login
     else:
-        print("Silakan lakukan login terlebih dahulu.")
-    return list_game
+        print('Maaf, anda harus login terlebih dahulu untuk mengirim perintah selain "login".')
+    return list_game_toko

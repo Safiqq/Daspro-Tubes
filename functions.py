@@ -36,26 +36,10 @@ def minimum(array):
 # Fungsi primitif array
 # Menambahkan suatu <element> (bisa string/array) di belakang <array>
 def append(array, element):
-    count_1 = length(array)
-    new_array = ["" for i in range(count_1 + 1)]
-    tipe = type(element)
-    # try:
-    if tipe == str:
-        # element : string
-        for i in range(count_1):
-            new_array[i] = array[i]
-        new_array[count_1] = element
-        return new_array
-    # except:
-    elif tipe == list:
-        # element : array
-        count_2 = length(element)
-        new_array[count_1] = ["" for i in range(count_2)]
-        for i in range(count_1):
-            new_array[i] = array[i]
-        for j in range(count_2):
-            new_array[count_1][j] = element[j]
-        return new_array
+    return array + [element]
+
+def konkat(array1, array2):
+    return array1 + array2
 
 # Menghapus suatu <element> pada <array> (jika ada). Jika terdapat lebih dari 1 <element> pada array,
 # dapat menghapus lebih dari 1 (parameter <number> opsional)
@@ -98,18 +82,18 @@ def split(string, element):
     return new_array
 
 # Mengurutkan <array (of integer)> berdasarkan ascending dan descending
-def sort(array, x="a"):
+def sort(array, order="a"):
     # a : ascending
     # d : descending
     count = length(array)
     new_array = ["" for i in range(count)]
-    if x == "a":
+    if order == "a" or order == "+":
         for i in range(count):
             element = minimum(array)
             array = remove(array, element)
             new_array[i] = element
         return new_array
-    elif x == "d":
+    elif order == "d" or order == "-":
         for i in range(count):
             element = maximum(array)
             array = remove(array, element)
@@ -149,26 +133,50 @@ def slicing(array, a, b):
         return new_array
 
 
-# Fungsi validasi dan convert angka
+# Fungsi validasi, convert angka, cari space maksimum
 # Mengembalikan boolean True apabila role dari <user_data> merupakan admin
 def validasi_akses(user_data):
     # id;username;nama;password;role;saldo
     return user_data[4] == "admin"
 
-# Mengembalikan boolean True apabila username dari <user_data> ditemukan di <list_user>
-def validasi_user(list_user, user_data):
+# Mengembalikan boolean True apabila username ditemukan di <list_user>
+def validasi_user(list_user, username):
     # id;username;nama;password;role;saldo
     for i in range(length(list_user)):
-        if list_user[i][1] == user_data[1]:
+        if list_user[i][1] == username:
+            return True
+    return False
+# print(validasi_user([["id", "username"]], "usernam1e"))
+
+def validasi_game_toko(list_game_toko, id_game):
+    # id;nama;kategori;tahun_rilis;harga;stok
+    for i in range(length(list_game_toko)):
+        if list_game_toko[i][0] == id_game:
             return True
     return False
 
-def validasi_game_toko(list_game_toko, input_game):
-    # id;nama;kategori;tahun_rilis;harga;stok
-    for i in range(length(list_game_toko)):
-        if list_game_toko[i][0] == input_game[0]:
+def validasi_game_dipunya(list_game, id_game, user_data):
+    # game_id;user_id
+    # id;username;nama;password;role;saldo
+    for i in range(length(list_game)):
+        if list_game[i][0] == id_game and list_game[i][1] == user_data[0]:
             return True
     return False
+
+def get_game_index(list_game_toko, id_game):
+    # id;nama;kategori;tahun_rilis;harga;stok
+    for i in range(length(list_game_toko)):
+        if list_game_toko[i][0] == id_game:
+            return i
+
+def get_id_game_owned(list_game_dipunya, user_data):
+    array = []
+    # game_id;user_id
+    # id;username;nama;password;role;saldo
+    for i in range(length(list_game_dipunya)):
+        if list_game_dipunya[i][1] == user_data[0]:
+            array = append(array, list_game_dipunya[i][0])
+    return array
 
 def convert(x, to_type):
     if to_type == str:
@@ -192,3 +200,10 @@ def convert(x, to_type):
         x = remove(x, ".", 999)
         x = int(x)
         return x
+
+def space_max(list_game, index):
+    count = 0
+    for i in range(length(list_game)):
+        if length(list_game[i][index]) > count:
+            count = length(list_game[i][index])
+    return count
