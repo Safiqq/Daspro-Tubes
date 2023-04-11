@@ -1,4 +1,4 @@
-# Tubes-Pengkom
+# Tubes-Daspro
 Program ini dibuat oleh kelompok 10 dari kelas K10, khusus untuk menyelesaikan tugas besar mata kuliah IF1210 Dasar Pemrograman.
 
 BNMO (dibaca: Binomo) adalah sebuah robot game milik Indra dan Doni yang membantu mereka melepas stress ketika mendapatkan tugas selama di Institut Teknologi Bandung. BNMO dulunya memiliki sistem inventarisasi & toko game yang baik. Indra dan Doni menjalani kuliah 2 semester di ITB dan merasa kesulitan dan stress. Doni menghabiskan waktu dengan BNMO untuk bermain game. Namun, Indra lebih suka bersenang-senang bermain gacha, akan tetapi ia rugi terus. Sehingga, pada suatu saat, Indra membanting BNMO sehingga BNMO pun rusak. Doni merasa depresi saat ia tahu BNMO rusak. Doni pun segera memperbaiki BNMO dan ia pun meminta bantuan kalian untuk memperbaiki BNMO karena Doni tidak cukup ahli dalam ngoding.
